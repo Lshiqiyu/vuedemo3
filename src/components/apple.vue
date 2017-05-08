@@ -6,11 +6,11 @@
 </template>
 <script>
   export default{
-      name:'hello',
+    name: 'hello',
     data(){
-          return{
-              msg:'i am an apple'
-          }
+      return {
+        msg: 'i am an apple'
+      }
     }
   }
 </script>

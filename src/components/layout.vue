@@ -5,11 +5,15 @@
         <img class="head-logo" src="../assets/logo.png" alt="">
         <div class="head-nav">
           <ul class="nav-list">
-            <li>登录</li>
+            <li>{{username}}</li>
+            <li v-if="username!==''" class="nav-pile">|</li>
+
+            <li v-if="username!== ''" @click="quit">退出</li>
+            <li v-if="username=== ''" @click="logClick">登录</li>
             <li class="nav-pile">|</li>
-            <li>注册</li>
-            <li class="nav-pile">|</li>
-            <li @click="aboutClick">关于</li>
+            <li v-if="username=== ''" @click="regClick">注册</li>
+            <li v-if="username=== ''" class="nav-pile">|</li>
+            <li  @click="aboutClick">关于</li>
           </ul>
         </div>
       </div>
@@ -22,29 +26,50 @@
     <div class="app-foot">
       <p>@2016 fishenal MIT</p>
     </div>
-    <my-dialog :isShow="isShowDialog" @on-close="closeDialog">
+    <my-dialog :is-show="isShowLogDialog" @on-close="closeDialog('isShowLogDialog')" @clik="aboutClick">
+      <log-form @has-log="onSuccessLog"></log-form>
+    </my-dialog>
+    <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')" @clik="aboutClick">
+      <p>注册</p>
+    </my-dialog>
+    <my-dialog :is-show="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')" @clik="aboutClick">
       <p>本报告在调研数据的基础上，采用定性与定量相结合的方式深入分析了专车市场发展的驱动因素与阻碍因素，专车市场背景后的产业格局。</p>
     </my-dialog>
   </div>
 </template>
 <script>
   import Dialog from './base/dialog.vue'
+  import LogForm from './logForm.vue'
   export default{
-
     components: {
-      MyDialog: Dialog
+      MyDialog: Dialog,
+      LogForm
     },
     data(){
       return {
-        isShowDialog: false
+        isShowAboutDialog: false,
+        isShowLogDialog: false,
+        isShowRegDialog: false,
+        username: ''
       }
     },
     methods: {
-      aboutClick(){
-        this.isShowDialog = true
+      closeDialog(attr){
+        this[attr] = false
       },
-      closeDialog(){
-        this.isShowDialog = false
+      aboutClick(){
+        this.isShowAboutDialog = true
+      },
+      logClick(){
+        this.isShowLogDialog = true
+      },
+      regClick(){
+        this.isShowRegDialog = true
+      },
+      onSuccessLog(data){
+        console.log(data.data.login.username)
+        this.closeDialog('isShowLogDialog')
+        this.username = data.data.login.username
       }
 
 
