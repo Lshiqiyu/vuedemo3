@@ -10,9 +10,7 @@ import DetailAnalysisPage from './pages/detail/analysis'
 import DetailCountPage from './pages/detail/count.vue'
 import DetailForecasePage from './pages/detail/forecast.vue'
 import DetailPulishPages from './pages/detail/publish.vue'
-// import Apple from './components/apple'
-// import Banana from './components/banana.vue'
-// import Redapple from './components/redapple.vue'
+import orderListPage from './pages/orderListPage.vue'
 // import Vuex from './vuex',
 
 
@@ -42,6 +40,10 @@ let router = new VRouter({
     {
       path: '/',
       component: IndexPages
+    },
+    {
+      path: '/',
+      component: orderListPage
     },
     {
       path: '/detail',

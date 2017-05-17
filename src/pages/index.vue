@@ -53,13 +53,14 @@
 </template>
 <script>
   import slideShow from '.././components/slideShow.vue'
+  import api from '../api.js'
   export default{
     components: {
       slideShow
     },
     created: function () {
-      var url = 'http://192.168.6.100:3000/json/db.json'
-      this.$http.get(url).then((res) => {
+//      var url = 'http://192.168.6.100:3000/json/db.json'
+      this.$http.get(api.data.url).then((res) => {
         this.newsList = res.data.getNewsList
       }, (err) => {
         console.log(err)
