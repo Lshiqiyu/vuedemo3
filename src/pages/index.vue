@@ -89,7 +89,7 @@
             title: 'xxx4',
             href: 'detail/forecast'
           }
-      ],
+        ],
         boardList: [
           {
             title: '开放产品',

@@ -4,7 +4,7 @@
   <div class="order-list-choose">
     <div class="order-list-option">
       选择产品：
-      <v-selection :selection="products" @on-change="productChange"></v-selection>
+      <v-selection :selections="products" @on-change="productChange"></v-selection>
     </div>
     <div class="order-list-option">
       开始日期：
@@ -22,12 +22,12 @@
   <div class="order-list-table">
     <table>
       <tr>
-        <th v-for="head in tableHeads" @click="changeOrderType(head)" :class="{active:head.active}">
+        <th v-for="head in tableHeaders" @click="changeOrderType(head)" :class="{active:head.active}">
           {{head.label}}
         </th>
       </tr>
       <tr v-for="item in tableDate" :key="item.period">
-        <td v-for="head in tableHeads">{{item[head.key]}}</td>
+        <td v-for="head in tableHeaders">{{item[head.key]}}</td>
       </tr>
     </table>
   </div>
@@ -37,6 +37,7 @@
   import VSelection from '../components/base/selection.vue'
   import VDatePicker from '../components/base/datepicker'
   import _ from 'lodash'
+  import api from '../api'
   export default{
     components: {
       VSelection,
@@ -97,15 +98,13 @@
           }
         ],
         currentOrder: 'asc',
-        tableData: []
+        tableDate: []
       }
     },
     watch: {
       query(){
-        this.getList
-        ()
+        this.getList()
       }
-
     },
     methods: {
       productChange(obj){
@@ -128,12 +127,12 @@
           endDate: this.endDate
         }
         this.$http.get(api.data.url).then((res) => {
-          this.tabkeDate = res.data.list
+          this.tableDate = res.data.getOrderList.list
         }, (error) => {
 
         })
       },
-      changeOrderType(){
+      changeOrderType(headItem){
         this.tableHeaders.map((item) => {
           item.active = false
           return item
@@ -145,10 +144,11 @@
         else if (this.currentOrder === 'desc') {
           this.currentOrder = 'asc'
         }
-        this.tableData = _.orderBy(this.table.tableData, headItem.key, this.currentOrder)
+        this.tableDate = _.orderBy(this.tableDate, headItem.key, this.currentOrder)
       }
     },
     mounted(){
+        console.log(this.$store)
       this.getList()
     }
   }
@@ -173,5 +173,35 @@
     border: 1px solid #e3e3e3;
     outline: none;
     text-indent: 10px;
+  }
+  .order-list-option{
+    display: inline-block;
+    padding-left: 15px;
+  }
+  .order-list-option:first-child{
+    padding-left:0;
+  }
+  .order-list-table{
+    margin-top:20px;
+  }
+  .order-list-table table{
+    width:100%;
+    background: #FFF;
+
+  }
+ order-list-table th , .order-list-table td {
+   border:1px solid #e3e3e3;
+   text-align: center;
+   padding:10px 0;
+  }
+  .order-list-table th{
+    background: #4fc08d;
+    color: #fff;
+    border:1px solid #4fc08d;
+    cursor: pointer;
+
+  }
+  .order-list-table th .active{
+    background: #35495e;
   }
 </style>

@@ -10,7 +10,8 @@ import DetailAnalysisPage from './pages/detail/analysis'
 import DetailCountPage from './pages/detail/count.vue'
 import DetailForecasePage from './pages/detail/forecast.vue'
 import DetailPulishPages from './pages/detail/publish.vue'
-import orderListPage from './pages/orderListPage.vue'
+import OrderListPage from './pages/orderListPage.vue'
+import store from './store'
 // import Vuex from './vuex',
 
 
@@ -42,8 +43,8 @@ let router = new VRouter({
       component: IndexPages
     },
     {
-      path: '/',
-      component: orderListPage
+      path: '/OrderListPage',
+      component: OrderListPage
     },
     {
       path: '/detail',
@@ -73,6 +74,7 @@ let router = new VRouter({
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   template: '<Layout/>',
   components: {Layout}
